@@ -29,4 +29,4 @@ RUN apt-get update \
   && pecl install imagick \
   && docker-php-ext-enable imagick
 
-WORKDIR /var/www
+WORKDIR /srv/www/sample-app
