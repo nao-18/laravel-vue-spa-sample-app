@@ -1,0 +1,80 @@
+version: '3.2'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+    - "80:80"
+    volumes:
+    - ./sample-app/public:/srv/www/sample-app/public:cached
+    restart: always
+    tty: true
+    read_only: false
+    privileged: true
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./docker/php-fpm/Dockerfile
+    depends_on:
+      - mysql
+      - mail
+      - samples3
+    volumes:
+    - ./sample-app:/srv/www/sample-app:cached
+    restart: always
+    tty: true
+    read_only: false
+    privileged: true
+
+  nodejs:
+    build:
+      context: .
+      dockerfile: ./docker/nodejs/Dockerfile
+    volumes:
+    - .:/build
+    working_dir: /build
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: sample
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    ports:
+    - "3306:3306"
+    volumes:
+    - mysql-data:/var/lib/mysql
+    restart: always
+    tty: true
+    read_only: false
+    privileged: true
+
+  mail:
+    image: mailhog/mailhog
+    ports:
+    - "8025:8025"
+    - "1025:1025"
+    restart: always
+    tty: true
+    read_only: false
+    privileged: true
+
+  samples3:
+    hostname: samples3
+    image: minio/minio
+    volumes:
+    - "./s3:/data"
+    ports:
+    - "9100:9000"
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: 12345678901234567890
+      MINIO_SECRET_KEY: 1234567890123456789012345678901234567890
+    restart: always
+
+volumes:
+  mysql-data:
