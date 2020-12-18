@@ -48,4 +48,15 @@ class LoginController extends Controller
     {
         return $user;
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function loggedOut(Request $request)
+    {
+        // session reproducibility
+        $request->session()->regenerate();
+        return response()->json();
+    }
 }
