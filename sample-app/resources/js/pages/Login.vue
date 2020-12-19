@@ -19,7 +19,7 @@
         <label for="login-email">Email</label>
         <input type="text" class="form__item" id="login-email" v-model="loginForm.email">
         <label for="login-password">Password</label>
-        <input type="text" class="form__item" id="login-password" v-model="loginForm.password">
+        <input type="password" class="form__item" id="login-password" v-model="loginForm.password">
         <div class="form__button">
           <button type="submit" class="button button--inverse">login</button>
         </div>
@@ -32,9 +32,9 @@
         <label for="email">Email</label>
         <input type="text" class="form__item" id="email" v-model="registerForm.email">
         <label for="password">Password</label>
-        <input type="text" class="form__item" id="password" v-model="registerForm.password">
+        <input type="password" class="form__item" id="password" v-model="registerForm.password">
         <label for="password-confirmation">Password(confirm)</label>
-        <input type="text" class="form__item" id="password-confirmation" v-model="registerForm.password_confirmation">
+        <input type="password" class="form__item" id="password-confirmation" v-model="registerForm.password_confirmation">
         <div class="form__button">
           <button type="submit" class="button button--inverse">register</button>
         </div>
@@ -61,11 +61,19 @@ export default {
     }
   },
   methods: {
-    login() {
-      console.log(this.loginForm)
+    async login() {
+      // call the login action of the auth store.
+      await this.$store.dispatch('auth/login', this.loginForm)
+
+      // move to top page.
+      await this.$router.push('/')
     },
-    register() {
-      console.log(this.registerForm)
+    async register() {
+      // call the register action of the auth store.
+      await this.$store.dispatch('auth/register', this.registerForm)
+
+      // move to top page.
+      await this.$router.push('/')
     }
   }
 }
