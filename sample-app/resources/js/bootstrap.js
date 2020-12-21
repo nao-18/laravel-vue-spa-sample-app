@@ -30,6 +30,7 @@
 
 
 import { getCookieValue } from "./util";
+import error from "./store/error";
 
 window.axios = require('axios')
 
@@ -42,3 +43,8 @@ window.axios.interceptors.request.use(config => {
 
     return config
 })
+
+window.axios.interceptors.response.use(
+    response => response,
+    error => error.response || error
+)
