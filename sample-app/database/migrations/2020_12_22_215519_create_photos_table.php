@@ -4,9 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * Class CreatePhotosTable
- */
 class CreatePhotosTable extends Migration
 {
     /**
@@ -17,10 +14,12 @@ class CreatePhotosTable extends Migration
     public function up()
     {
         Schema::create('photos', function (Blueprint $table) {
-            $table->string('id')->unique();
-            $table->unsignedBigInteger('user_id')->comment('user.id');
-            $table->string('filename')->comment('ファイル名');
+            $table->string('id')->primary();
+            $table->unsignedBigInteger('user_id');
+            $table->string('filename');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
