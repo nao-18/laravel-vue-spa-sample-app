@@ -28,6 +28,8 @@ class Photo extends Model
         'id', 'owner', 'url',
     ];
 
+    protected $perPage = 1; // この値を少なくすれば動作確認しやすいですね
+
     /**
      * リレーションシップ - usersテーブル
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
