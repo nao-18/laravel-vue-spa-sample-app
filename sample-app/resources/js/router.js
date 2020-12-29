@@ -29,6 +29,11 @@ const routes = [
         props: true
     },
     {
+        path: '/photos/:id',
+        component: PhotoDetail,
+        props: true
+    },
+    {
         path: '/login',
         component: Login,
         beforeEnter(to, from, next) {

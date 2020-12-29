@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Class Photo
  * @package App
+ * @method static where(string $string, string $id)
  */
 class Photo extends Model
 {
@@ -28,7 +29,7 @@ class Photo extends Model
         'id', 'owner', 'url',
     ];
 
-    protected $perPage = 1; // この値を少なくすれば動作確認しやすいですね
+    protected $perPage = 10; // この値を少なくすれば動作確認しやすいですね
 
     /**
      * リレーションシップ - usersテーブル
